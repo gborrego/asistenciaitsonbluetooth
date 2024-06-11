@@ -1,0 +1,109 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- Banner -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/new_group"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Nuevo grupo"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="#FFFFFF"
+            android:padding="8dp" />
+    </FrameLayout>
+
+
+
+    <!-- input name -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:gravity="center_horizontal"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:text="Nombre:"
+            android:paddingLeft="30dp"
+            android:textSize="18sp"
+            android:textColor="#0E5688"
+            android:gravity="left" />
+        <EditText
+            android:layout_width="350"
+            android:layout_height="50"
+            android:hint="Ingrese nombre del curso"
+            android:padding="16dp"
+            android:background="#F0F0F0"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+    <!-- attach button -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center_horizontal"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:text="Adjuntar archivo de lista"
+            android:textSize="18sp"
+            android:textColor="#0E5688"
+            android:gravity="center" />
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/attach"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop" />
+
+    </LinearLayout>
+
+    <!-- bot button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="100dp"
+        android:paddingBottom="40dp"
+        >
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Crear"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:background="@drawable/radius_button" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,148 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- Banner -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:src="@drawable/list"
+            android:scaleType="centerCrop" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:paddingTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:text="Grupo:"
+                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- top buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lista"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/radius_button" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Alumnos"
+            android:textSize="18sp"
+            android:textColor="#FFF"
+            android:background="@drawable/radius_button" />
+    </LinearLayout>
+
+    <!-- Header (Date, day, skips) -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0E5688"
+            android:paddingTop="15dp"
+            android:padding="8dp"
+            android:text="Fecha"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0E5688"
+            android:paddingTop="15dp"
+            android:padding="8dp"
+            android:text="Día"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0E5688"
+            android:paddingTop="15dp"
+            android:padding="8dp"
+            android:text="Faltas"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+
+    <!-- attendance list -->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+    <!-- bot button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="40dp"
+        >
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Pasar Lista"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:background="@drawable/radius_button" />
+    </LinearLayout>
+</LinearLayout>
