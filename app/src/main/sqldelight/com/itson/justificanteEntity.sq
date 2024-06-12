@@ -1,0 +1,22 @@
+CREATE TABLE justificanteEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nota TEXT NOT NULL,
+    foto TEXT NOT NULL
+);
+
+selectAllJustificantes:
+SELECT *
+FROM justificanteEntity;
+
+selectJustificanteById:
+SELECT *
+FROM justificanteEntity
+WHERE id = ?;
+
+insertJustificante:
+INSERT INTO justificanteEntity (nota, foto)
+VALUES (?, ?);
+
+deleteJustificanteById:
+DELETE FROM justificanteEntity
+WHERE id = ?;

@@ -1,5 +1,3 @@
--- File: src/main/sqldelight/com/example/clases.sq
-
 CREATE TABLE claseEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
@@ -12,10 +10,20 @@ selectAllClases:
 SELECT *
 FROM claseEntity;
 
+selectClaseById:
+SELECT *
+FROM claseEntity
+WHERE id = ?;
+
 insertClase:
 INSERT INTO claseEntity (nombre, alias, ciclo, instructor)
 VALUES (?, ?, ?, ?);
 
 deleteClaseById:
 DELETE FROM claseEntity
+WHERE id = ?;
+
+updateClase:
+UPDATE claseEntity
+SET nombre = ?, alias = ?, ciclo = ?, instructor = ?
 WHERE id = ?;

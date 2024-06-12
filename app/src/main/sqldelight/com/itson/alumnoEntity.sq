@@ -1,0 +1,39 @@
+CREATE TABLE alumnoEntity (
+    matricula INTEGER PRIMARY KEY UNIQUE,
+    nombre TEXT NOT NULL,
+    apellido TEXT NOT NULL,
+    id_dispositivo INTEGER,
+    FOREIGN KEY (id_dispositivo) REFERENCES dispositivoEntity(id)
+);
+
+selectAllAlumnos:
+SELECT *
+FROM alumnoEntity;
+
+selectAlumnoById:
+SELECT *
+FROM alumnoEntity
+WHERE matricula = ?;
+
+selectAlumnoByDispositivo:
+SELECT *
+FROM  alumnoEntity
+WHERE id_dispositivo = ?;
+
+insertAlumno:
+INSERT INTO alumnoEntity (matricula, nombre, apellido, id_dispositivo)
+VALUES (?, ?, ?, ?);
+
+deleteAlumnoByMatricula:
+DELETE FROM alumnoEntity
+WHERE matricula = ?;
+
+updateAlumno:
+UPDATE alumnoEntity
+SET nombre = ?, apellido = ?, id_dispositivo = ?
+WHERE matricula = ?;
+
+setAlumnoDispositivo:
+UPDATE alumnoEntity
+SET id_dispositivo = ?
+WHERE matricula = ?;
