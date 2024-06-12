@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.itson.AlumnoClaseQueries
+import com.itson.AlumnoEntity
 import com.itson.AlumnoEntityQueries
 import com.itson.ClaseEntityQueries
 import com.itson.DispositivoEntityQueries
@@ -30,13 +31,14 @@ class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Appli
         }
     }
 
-    override fun getById(id: Long): Alumno? {
-        return try {
+    override fun getById(id: Long): Alumno {
+        try {
             val alumno = alumnoEntityQueries.selectAlumnoById(id).executeAsOneOrNull()
-            val dispositivo = alumno?.id_dispositivo?.let { dispositivoId ->
-                dispositivoEntityQueries.selectDispositivoById(dispositivoId).executeAsOne().asModel()
+            if (alumno != null){
+                val dispositivo = modelarDispositvo(alumno);
+                alumno.asModel(dispositivo)
             }
-            alumno?.asModel(dispositivo)
+            throw Exception("Error! No se pudo obtener al alumno con id $id")
         } catch (e: Exception) {
             e.message?.let { Log.e("DB Error", it) }
             throw Exception("Error! No se pudo obtener al alumno con id $id")
@@ -46,9 +48,7 @@ class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Appli
     override fun getAll(): List<Alumno> {
         return try {
             alumnoEntityQueries.selectAllAlumnos().executeAsList().map {
-                val dispositivo = it.id_dispositivo?.let { dispositivoId ->
-                    dispositivoEntityQueries.selectDispositivoById(dispositivoId).executeAsOne().asModel()
-                }
+                val dispositivo = modelarDispositvo(it);
                 it.asModel(dispositivo)
             }
         } catch (e: Exception) {
@@ -71,7 +71,7 @@ class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Appli
         }
     }
 
-    fun setToClase(alumno: Alumno, clase: Clase){
+    override fun setToClase(alumno: Alumno, clase: Clase){
         if (clase.id != null) {
             return try {
                 alumnoClaseQueries.insertAlumnoClase(alumno.matricula, clase.id)
@@ -83,13 +83,11 @@ class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Appli
         throw Exception ("La clase proporcionada no tiene el parametro id")
     }
 
-    fun getAllByClase(clase: Clase): List<Alumno> {
+    override fun getAllByClase(clase: Clase): List<Alumno> {
         if (clase.id != null) {
             return try {
                  alumnoClaseQueries.selectAlumnosForClase(clase.id).executeAsList().map { alumno ->
-                    val dispositivo = alumno.id_dispositivo?.let { dispositivoId ->
-                        dispositivoEntityQueries.selectDispositivoById(dispositivoId).executeAsOne().asModel()
-                    }
+                    val dispositivo = modelarDispositvo(alumno);
                     alumno.asModel(dispositivo)
                 }
             }  catch (e: Exception) {
@@ -98,5 +96,11 @@ class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Appli
             }
         }
         throw Exception ("La clase proporcionada no tiene el parametro id")
+    }
+
+    private fun modelarDispositvo(alumnoEntity: AlumnoEntity): Dispositivo {
+        return alumnoEntity.id_dispositivo?.let { dispositivoId ->
+            dispositivoEntityQueries.selectDispositivoById(dispositivoId).executeAsOneOrNull()?.asModel()
+        }?: throw IllegalArgumentException("El dispositivo no es válido.")
     }
 }

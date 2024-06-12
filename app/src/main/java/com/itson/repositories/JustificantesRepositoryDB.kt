@@ -21,10 +21,12 @@ class JustificantesRepositoryDB(databaseProvider: DatabaseProvider, application:
         TODO("Not yet implemented")
     }
 
-    fun insertToAsistencia(asistencia: Asistencia, justificante: Justificante) {
+    override fun insertToAsistencia(asistencia: Asistencia, justificante: Justificante) {
         if (asistencia.id != null){
             return try {
-                asistenciaEntityQueries.setAsistenciaJustificante(justificante.id, asistencia.id)
+                justificanteEntityQueries.insertJustificante(nota = justificante.nota, foto = justificante.foto)
+                val justificanteId = justificanteEntityQueries.lastInsertRowId().executeAsOne();
+                asistenciaEntityQueries.setAsistenciaJustificante(justificanteId, asistencia.id)
             } catch (e: Exception) {
                 e.message?.let { Log.e("DB Error", it) }
                 throw Exception("Error! No se pudo insertar el justificante a la asistencia")

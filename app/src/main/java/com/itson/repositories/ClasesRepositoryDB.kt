@@ -1,7 +1,6 @@
 package com.itson.repositories
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import com.itson.AlumnoClaseQueries
 import com.itson.ClaseEntityQueries
