@@ -1,12 +1,22 @@
 CREATE TABLE dispositivoEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
-    direccion TEXT NOT NULL
+    direccion TEXT NOT NULL UNIQUE
 );
 
 selectAllDispositivos:
 SELECT *
 FROM dispositivoEntity;
+
+selectDispositivoById:
+SELECT *
+FROM dispositivoEntity
+WHERE id = ?;
+
+selectDispositivoByDireccion:
+SELECT *
+FROM dispositivoEntity
+WHERE direccion = ?;
 
 insertDispositivo:
 INSERT INTO dispositivoEntity (nombre, direccion)
@@ -14,4 +24,9 @@ VALUES (?, ?);
 
 deleteDispositivoById:
 DELETE FROM dispositivoEntity
+WHERE id = ?;
+
+updateClase:
+UPDATE dispositivoEntity
+SET nombre = ?, direccion = ?
 WHERE id = ?;

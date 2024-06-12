@@ -1,0 +1,21 @@
+CREATE TABLE alumnoClase (
+    alumno_matricula INTEGER NOT NULL,
+    clase_id INTEGER NOT NULL,
+    FOREIGN KEY (alumno_matricula) REFERENCES alumnoEntity(matricula),
+    FOREIGN KEY (clase_id) REFERENCES claseEntity(id),
+    PRIMARY KEY (alumno_matricula, clase_id)
+);
+
+insertAlumnoClase:
+INSERT INTO alumnoClase (alumno_matricula, clase_id)
+VALUES (?, ?);
+
+selectAlumnosForClase:
+SELECT alumnoEntity.* FROM alumnoEntity
+JOIN alumnoClase ON alumnoEntity.matricula = alumnoClase.alumno_matricula
+WHERE alumnoClase.clase_id = ?;
+
+selectClasesForAlumno:
+SELECT claseEntity.* FROM claseEntity
+JOIN alumnoClase ON claseEntity.id = alumnoClase.clase_id
+WHERE alumnoClase.alumno_matricula = ?;

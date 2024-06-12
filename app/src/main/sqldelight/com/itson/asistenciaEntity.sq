@@ -1,0 +1,49 @@
+CREATE TABLE asistenciaEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    estado TEXT NOT NULL,
+    id_alumno INTEGER NOT NULL,
+    id_clase INTEGER NOT NULL,
+    id_justificante INTEGER,
+    fecha TEXT DEFAULT (date('now')),
+    FOREIGN KEY (id_alumno) REFERENCES alumnoEntity(matricula),
+    FOREIGN KEY (id_clase) REFERENCES claseEntity(id),
+    FOREIGN KEY (id_justificante) REFERENCES justificanteEntity(id),
+    CHECK (estado IN ('PRESENTE', 'AUSENTE', 'JUSTIFICADO'))
+);
+
+selectAllAsistencias:
+SELECT *
+FROM asistenciaEntity;
+
+selectAsistenciaById:
+SELECT *
+FROM asistenciaEntity
+WHERE id = ?;
+
+selectAsistenciasByClaseAndFecha:
+SELECT *
+FROM asistenciaEntity
+WHERE id_clase= ? AND fecha = ?;
+
+selectAsistenciasByAlumno:
+SELECT *
+FROM asistenciaEntity
+WHERE id_alumno = ?;
+
+insertAsistencia:
+INSERT INTO asistenciaEntity (estado, id_alumno, id_clase, id_justificante)
+VALUES (?, ?, ?, ?);
+
+deleteAsistenciaById:
+DELETE FROM asistenciaEntity
+WHERE id = ?;
+
+updateAsistencia:
+UPDATE asistenciaEntity
+SET estado = ?, id_alumno = ?, id_clase = ?, id_justificante = ?
+WHERE id = ?;
+
+setAsistenciaJustificante:
+UPDATE asistenciaEntity
+SET id_justificante = ?
+WHERE id = ?;
