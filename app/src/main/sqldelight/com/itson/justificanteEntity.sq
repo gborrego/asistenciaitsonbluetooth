@@ -1,7 +1,7 @@
 CREATE TABLE justificanteEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nota TEXT NOT NULL,
-    foto TEXT NOT NULL
+    foto TEXT
 );
 
 selectAllJustificantes:
@@ -12,6 +12,10 @@ selectJustificanteById:
 SELECT *
 FROM justificanteEntity
 WHERE id = ?;
+
+lastInsertRowId:
+SELECT last_insert_rowid()
+;
 
 insertJustificante:
 INSERT INTO justificanteEntity (nota, foto)

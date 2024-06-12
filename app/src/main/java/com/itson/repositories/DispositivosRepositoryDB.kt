@@ -20,13 +20,12 @@ class DispositivosRepositoryDB (databaseProvider: DatabaseProvider, application:
         TODO("Not yet implemented")
     }
 
-    fun insertToAlumno(dispositivo: Dispositivo, alumno: Alumno) {
+    override fun insertToAlumno(dispositivo: Dispositivo, alumno: Alumno) {
         val(_, nombre, direccion) = dispositivo
         try {
             dispositivoEntityQueries.insertDispositivo(nombre,direccion)
-            val dispositivoGuardado = dispositivoEntityQueries.selectDispositivoByDireccion(direccion).executeAsOneOrNull()
-            if (dispositivoGuardado != null) {
-                return alumnoEntityQueries.setAlumnoDispositivo(dispositivoGuardado.id, alumno.matricula)
+            dispositivoEntityQueries.selectDispositivoByDireccion(direccion).executeAsOneOrNull()?.let {
+                return alumnoEntityQueries.setAlumnoDispositivo(it.id, alumno.matricula)
             }
             throw Exception("No se pudo establecer el $dispositivo al $alumno")
         } catch (e: Exception) {

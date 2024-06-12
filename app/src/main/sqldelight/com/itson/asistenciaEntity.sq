@@ -1,6 +1,8 @@
+import com.itson.models.Asistencia.Estado;
+
 CREATE TABLE asistenciaEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    estado TEXT NOT NULL,
+    estado TEXT AS Estado NOT NULL,
     id_alumno INTEGER NOT NULL,
     id_clase INTEGER NOT NULL,
     id_justificante INTEGER,
@@ -24,6 +26,11 @@ selectAsistenciasByClaseAndFecha:
 SELECT *
 FROM asistenciaEntity
 WHERE id_clase= ? AND fecha = ?;
+
+selectAsistenciasByClaseAndAlumno:
+SELECT *
+FROM asistenciaEntity
+WHERE id_clase= ? AND id_alumno = ?;
 
 selectAsistenciasByAlumno:
 SELECT *
