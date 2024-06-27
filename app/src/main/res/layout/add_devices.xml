@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Banner -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:src="@drawable/grupo"
+            android:backgroundTint="@android:color/black"
+            android:alpha="0.8"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Vinculacion de dispositivos"
+                android:textSize="30sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:paddingTop="20dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0E5688"
+            android:paddingTop="15dp"
+            android:padding="8dp"
+            android:text="Dispositivo"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0E5688"
+            android:paddingTop="15dp"
+            android:padding="8dp"
+            android:text="Alumno"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <ListView
+            android:id="@+id/bluetooth_device_list_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:choiceMode="singleChoice" />
+
+
+        <ListView
+            android:id="@+id/student_list_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:listSelector="@android:color/holo_blue_light"
+            android:choiceMode="singleChoice" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="40dp"
+        >
+        <Button
+            android:id="@+id/pair_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Vincular"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:background="@drawable/radius_button" />
+
+        <Button
+            android:id="@+id/manual_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Manual"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:background="@drawable/radius_button" />
+    </LinearLayout>
+</LinearLayout>

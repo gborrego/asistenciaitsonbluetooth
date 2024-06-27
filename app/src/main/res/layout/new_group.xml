@@ -48,8 +48,9 @@
             android:textColor="#0E5688"
             android:gravity="left" />
         <EditText
-            android:layout_width="350"
-            android:layout_height="50"
+            android:id="@+id/group_name"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
             android:hint="Ingrese nombre del curso"
             android:padding="16dp"
             android:background="#F0F0F0"
@@ -77,6 +78,7 @@
             android:textColor="#0E5688"
             android:gravity="center" />
         <ImageButton
+            android:id="@+id/attach_boton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:gravity="center"
@@ -97,6 +99,7 @@
         >
 
         <Button
+            android:id="@+id/create_boton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Crear"

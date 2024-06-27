@@ -52,25 +52,25 @@
         android:padding="5dp">
 
         <Button
-            android:id="@+id/list_boton"
+            android:id="@+id/botonLista"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Lista"
             android:textSize="18sp"
             android:layout_gravity="center"
-            android:textColor="#0E5688"
-            android:background="@drawable/white_button" />
+            android:textColor="#ffff"
+            android:background="@drawable/radius_button" />
 
         <Button
-            android:id="@+id/students_boton"
+            android:id="@+id/botonAlumnos"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Alumnos"
             android:textSize="18sp"
-            android:textColor="#FFFF"
-            android:background="@drawable/radius_button" />
+            android:textColor="#0E5688"
+            android:background="@drawable/white_button" />
     </LinearLayout>
 
     <!-- Header (Date, day, skips) -->
@@ -88,8 +88,8 @@
             android:background="#0E5688"
             android:paddingTop="15dp"
             android:padding="8dp"
-            android:text="Fecha"
-            android:textSize="18sp"
+            android:text="ID"
+            android:textSize="17sp"
             android:textColor="#FFFFFF"
             android:gravity="center" />
 
@@ -100,8 +100,8 @@
             android:background="#0E5688"
             android:paddingTop="15dp"
             android:padding="8dp"
-            android:text="Día"
-            android:textSize="18sp"
+            android:text="Nombre"
+            android:textSize="17sp"
             android:textColor="#FFFFFF"
             android:gravity="center" />
 
@@ -112,8 +112,20 @@
             android:background="#0E5688"
             android:paddingTop="15dp"
             android:padding="8dp"
-            android:text="Faltas"
-            android:textSize="18sp"
+            android:text="%"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0E5688"
+            android:paddingTop="15dp"
+            android:padding="8dp"
+            android:text="Dispositivo"
+            android:textSize="17sp"
             android:textColor="#FFFFFF"
             android:gravity="center" />
 
@@ -122,7 +134,7 @@
 
     <!-- attendance list -->
     <ListView
-        android:id="@+id/group_list_view_boton"
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -139,14 +151,14 @@
         >
 
         <Button
-            android:id="@+id/attendance_boton"
-            android:layout_width="150dp"
+            android:id="@+id/add_button"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:text="Pasar Lista"
+            android:background="@drawable/radius_button"
             android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF"
             android:padding="10dp"
-            android:background="@drawable/radius_button" />
+            android:text="Agregar Dispositivos"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>
