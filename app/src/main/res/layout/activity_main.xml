@@ -50,6 +50,7 @@
 
     <!-- List of groups -->
     <ListView
+        android:id="@+id/group_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -65,9 +66,19 @@
         android:paddingBottom="40dp">
 
         <Button
+            android:id="@+id/create_boton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Crear Grupo"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/radius_button" />
+        <Button
+            android:id="@+id/open_pairing_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="aegragr dis"
             android:gravity="center"
             android:textSize="18sp"
             android:textColor="#FFFFFF"
