@@ -1,19 +1,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF">
+    tools:context=".MainActivity">
 
-    <!-- Banner -->
+    <!-- Contenedor superior con imagen y texto -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_marginTop="16dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/new_group"
+            android:src="@drawable/grupo"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -27,28 +28,27 @@
             android:padding="8dp" />
     </FrameLayout>
 
-
-
-    <!-- input name -->
+    <!-- Contenedor central con nombre del curso y selección de archivo CSV -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:paddingTop="5dp"
-        android:gravity="center_horizontal"
-        >
+        android:gravity="center_horizontal">
 
+        <!-- TextView y EditText para el nombre del curso -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:text="Nombre:"
             android:paddingLeft="30dp"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textColor="#0E5688"
             android:gravity="left" />
         <EditText
-            android:id="@+id/group_name"
+            android:id="@+id/edittext_alias"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:hint="Ingrese nombre del curso"
@@ -57,56 +57,143 @@
             android:textColor="#000000"
             android:layout_marginTop="16dp" />
 
-    </LinearLayout>
+        <!-- Botón para seleccionar archivo CSV -->
+        <Button
+            android:id="@+id/button_select_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar archivo"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center_horizontal"/>
 
-    <!-- attach button -->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="5dp"
-        android:layout_marginTop="25dp"
-        android:gravity="center_horizontal"
-        >
+        <!-- TextViews para mostrar nombre, ciclo e instructor -->
         <TextView
+            android:id="@+id/textview_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
-            android:text="Adjuntar archivo de lista"
-            android:textSize="18sp"
+            android:text="Clase:"
+            android:paddingLeft="30dp"
+            android:textSize="15sp"
             android:textColor="#0E5688"
-            android:gravity="center" />
-        <ImageButton
-            android:id="@+id/attach_boton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/attach"
-            android:background="@android:color/transparent"
-            android:scaleType="centerCrop" />
+            android:gravity="left" />
 
-    </LinearLayout>
-
-    <!-- bot button -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingTop="100dp"
-        android:paddingBottom="40dp"
-        >
-
-        <Button
-            android:id="@+id/create_boton"
-            android:layout_width="150dp"
+        <!-- TextView para mostrar el Ciclo -->
+        <TextView
+            android:id="@+id/textview_ciclo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Crear"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF"
-            android:padding="10dp"
-            android:background="@drawable/radius_button" />
+            android:paddingTop="15dp"
+            android:text="Ciclo:"
+            android:paddingLeft="30dp"
+            android:textSize="15sp"
+            android:textColor="#0E5688"
+            android:gravity="left" />
+
+        <!-- TextView para mostrar el Instructor -->
+        <TextView
+            android:id="@+id/textview_instructor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:text="Instructor:"
+            android:paddingLeft="30dp"
+            android:textSize="15sp"
+            android:textColor="#0E5688"
+            android:gravity="left" />
+
+        <!-- Espacio entre secciones -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0E5688"
+                android:text="Alumnos"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0E5688"
+                android:text="ID"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0E5688"
+                android:text="Nombre"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1" />
+
+
+
+        </LinearLayout>
+        <!-- ScrollView para la lista de alumnos -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- TextView para mostrar la lista de alumnos -->
+                <TextView
+                    android:id="@+id/textview_alumnos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp" />
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
+
+    <!-- Botón de creación de grupo alineado al fondo de la pantalla -->
+    <Button
+        android:id="@+id/create_boton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Crear"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:background="@drawable/radius_button"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="16dp" />
+
 </LinearLayout>
