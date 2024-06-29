@@ -1,5 +1,6 @@
 package com.itson
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,6 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import com.itson.activities.CrearClaseActivity
 import com.itson.models.Alumno
 import com.itson.models.Clase
 import com.itson.repositories.AlumnosRepository
@@ -38,12 +42,12 @@ class MainActivity() : ComponentActivity(){
                 ) {
                     Greeting("Android")
                 }
+
             }
         }
-        guardarAlumno()
-        imprimirAlumnos()
-        guardarClase()
         imprimirClases()
+        imprimirAlumnos();
+        navigateToSecondActivity();
     }
 
     private fun guardarClase(){
@@ -64,6 +68,10 @@ class MainActivity() : ComponentActivity(){
     private fun imprimirAlumnos(){
         val alumnos = alumnosRepository.getAll();
         Log.i("Alumnos", alumnos.toString());
+    }
+    private fun navigateToSecondActivity() {
+        val intent = Intent(this, CrearClaseActivity::class.java)
+        startActivity(intent)
     }
 }
 

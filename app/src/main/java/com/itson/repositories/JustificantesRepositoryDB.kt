@@ -21,6 +21,10 @@ class JustificantesRepositoryDB(databaseProvider: DatabaseProvider, application:
         TODO("Not yet implemented")
     }
 
+    override fun getLast(): Justificante? {
+        TODO("Not yet implemented")
+    }
+
     override fun insertToAsistencia(asistencia: Asistencia, justificante: Justificante) {
         if (asistencia.id != null){
             return try {

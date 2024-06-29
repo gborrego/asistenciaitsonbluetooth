@@ -48,6 +48,18 @@ class ClasesRepositoryDB (databaseProvider : DatabaseProvider, application: Appl
         }
     }
 
+    override fun getLast(): Clase? {
+        return try{
+            claseEntityQueries.lastInsertRowId().executeAsOneOrNull()?.let{
+                val clase = claseEntityQueries.selectClaseById(it).executeAsOneOrNull();
+                return clase?.asModel(null);
+            }
+        } catch (e: Exception){
+            e.message?.let { Log.e("DB Error", it) }
+            throw Exception("Error! No se pudo obtener la clase")
+        }
+    }
+
     override fun delete(id: Long) {
         TODO("Not yet implemented")
     }
