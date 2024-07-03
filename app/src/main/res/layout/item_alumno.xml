@@ -1,43 +1,47 @@
-<!-- item_alumno.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:gravity="center_vertical">
 
-    <!-- Student ID -->
     <TextView
-        android:id="@+id/textViewNombre"
+        android:id="@+id/textViewSimbolo"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
+        android:layout_weight="1"
+        android:textSize="22sp"
+        android:textColor="#0E5688"
+        android:gravity="center"
         android:text="ID" />
 
-    <!-- Student name -->
     <TextView
-        android:id="@+id/textViewNombre"
+        android:id="@+id/textViewSimbolo"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
-        android:text="Nombre del alumno" />
+        android:textSize="22sp"
+        android:textColor="#0E5688"
+        android:gravity="center"
+        android:text="nombre" />
 
-    <!-- CheckBox attendance -->
-    <CheckBox
-        android:id="@+id/checkBoxAsistencia"
+    <TextView
+        android:id="@+id/textViewSimbolo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="22sp"
+        android:textColor="#0E5688"
+        android:gravity="center"
+        android:text="%" />
+
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
-
-    <!-- CheckBox late -->
-    <CheckBox
-        android:id="@+id/checkBoxRetardo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
-
+        android:backgroundTint="@color/white"
+        android:src="@drawable/disp_desconectado"/>
 </LinearLayout>

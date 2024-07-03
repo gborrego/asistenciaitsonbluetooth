@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -72,7 +73,7 @@
 
         <!-- TextViews para mostrar nombre, ciclo e instructor -->
         <TextView
-            android:id="@+id/textview_nombre"
+            android:id="@+id/textview_clase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
@@ -163,24 +164,24 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:gravity="center"
             android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <!-- TextView para mostrar la lista de alumnos -->
                 <TextView
                     android:id="@+id/textview_alumnos"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="#0E5688"
-                    android:textStyle="bold"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="10dp"
+                    android:gravity="center"
                     android:paddingBottom="8dp" />
             </LinearLayout>
         </ScrollView>
