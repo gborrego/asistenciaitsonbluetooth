@@ -13,6 +13,7 @@
         android:paddingTop="40dp"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/id_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ID:"
@@ -22,6 +23,7 @@
             android:background="#0E5688"
             />
         <TextView
+            android:id="@+id/nombreAlumno_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Alumno:"
@@ -31,6 +33,7 @@
             android:background="#0E5688"
             />
         <TextView
+            android:id="@+id/faltas_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Numero de faltas:"
@@ -107,6 +110,7 @@
         >
 
         <Button
+            android:id="@+id/terminar_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Terminar"
