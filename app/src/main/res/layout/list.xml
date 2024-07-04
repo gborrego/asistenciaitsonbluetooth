@@ -121,8 +121,8 @@
 
 
     <!-- attendance list -->
-    <ListView
-        android:id="@+id/group_list_view_boton"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lista_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
