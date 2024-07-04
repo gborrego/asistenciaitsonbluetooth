@@ -14,28 +14,7 @@
         android:textSize="22sp"
         android:textColor="#0E5688"
         android:gravity="center"
-        android:text="ID" />
-
-    <TextView
-        android:id="@+id/textViewSimbolo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="22sp"
-        android:textColor="#0E5688"
-        android:gravity="center"
-        android:text="nombre" />
-
-    <TextView
-        android:id="@+id/textViewSimbolo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="22sp"
-        android:textColor="#0E5688"
-        android:gravity="center"
-        android:text="%" />
-
+        android:text="fecha" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -43,5 +22,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
-        android:src="@drawable/disp_desconectado"/>
+        android:src="@drawable/justificar"/>
 </LinearLayout>

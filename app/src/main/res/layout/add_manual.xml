@@ -1,0 +1,146 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- Contenedor superior con imagen y texto -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/grupo"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Agregar Alumno"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="#FFFFFF"
+            android:padding="8dp" />
+    </FrameLayout>
+
+    <!-- Contenedor central con nombre del curso y selección de archivo CSV -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:gravity="center_horizontal">
+
+        <!-- TextView y EditText para el ID del alumno -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:text="ID del alumno:"
+            android:paddingLeft="30dp"
+            android:textSize="15sp"
+            android:textColor="#0E5688"
+            android:gravity="left" />
+        <EditText
+            android:id="@+id/edittext_id_alumno"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="Ingrese ID del alumno"
+            android:padding="16dp"
+            android:background="#F0F0F0"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp" />
+
+        <!-- TextView y EditText para el nombre del alumno-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:text="Nombre:"
+            android:paddingLeft="30dp"
+            android:textSize="15sp"
+            android:textColor="#0E5688"
+            android:gravity="left" />
+        <EditText
+            android:id="@+id/edittext_nombre_alumno"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="Ingrese nombre del alumno"
+            android:padding="16dp"
+            android:background="#F0F0F0"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp" />
+
+        <!-- TextView y EditText para el nombre del alumno-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:text="Apellidos:"
+            android:paddingLeft="30dp"
+            android:textSize="15sp"
+            android:textColor="#0E5688"
+            android:gravity="left" />
+
+        <EditText
+            android:id="@+id/edittext_apellidos_alumno"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="Ingrese apellidos del alumno"
+            android:padding="16dp"
+            android:background="#F0F0F0"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vincular  dispositivo"
+                android:textSize="20sp"
+                android:textColor="#0E5688"
+                android:gravity="center"
+                android:layout_marginTop="16dp" />
+
+            <ImageButton
+                android:id="@+id/imageButton_device"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/dev_disc_med"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <!-- Botón de creación de grupo  -->
+    <Button
+        android:id="@+id/create_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Crear"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:background="@drawable/radius_button"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+</LinearLayout>
