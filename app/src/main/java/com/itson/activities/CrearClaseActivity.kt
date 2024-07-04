@@ -30,7 +30,7 @@ class CrearClaseActivity : AppCompatActivity() {
         setContentView(R.layout.new_group)
 
         editTextAlias = findViewById(R.id.edittext_alias)
-        textViewClase = findViewById(R.id.textview_nombre)
+        textViewClase = findViewById(R.id.textview_clase)
         textViewCiclo = findViewById(R.id.textview_ciclo)
         textViewInstructor = findViewById(R.id.textview_instructor)
         textViewAlumnos = findViewById(R.id.textview_alumnos)
@@ -49,7 +49,7 @@ class CrearClaseActivity : AppCompatActivity() {
             val alias = editTextAlias.text.toString()
             viewModel.setAlias(alias)
             viewModel.createClase();
-            //navigateToSecondActivity()
+            navigateToMainActivity();
         }
 
         viewModel.nombre.observe(this, Observer { nombre ->
@@ -80,6 +80,11 @@ class CrearClaseActivity : AppCompatActivity() {
                 viewModel.parseCSV(uri)
             }
         }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
 }

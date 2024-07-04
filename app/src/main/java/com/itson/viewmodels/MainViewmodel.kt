@@ -39,4 +39,5 @@ class MainViewmodel @Inject constructor(
             }
             _clases.postValue(clasesList)
         }
-    }}
+    }
+}

@@ -12,7 +12,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.itson.R
+import com.itson.utils.ClaseAdapter
 import com.itson.viewmodels.CrearClaseViewmodel
 import com.itson.viewmodels.MainViewmodel
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +28,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val claseListView: ListView = findViewById(R.id.group_list_view)
+        val claseRecyclerView: RecyclerView = findViewById(R.id.clase_recycler_view)
         val createButton: Button = findViewById(R.id.create_boton)
 
         createButton.setOnClickListener {
@@ -33,12 +36,10 @@ class MainActivity : ComponentActivity() {
         }
 
         viewModel.clases.observe(this, Observer {
-            val adapter = ArrayAdapter(
-                this, // Contexto
-                android.R.layout.simple_list_item_1, // Layout para cada item
-                it
-            )
-            claseListView.adapter = adapter;
+            if (it != null) {
+                claseRecyclerView.adapter = ClaseAdapter(it)
+                claseRecyclerView.layoutManager = LinearLayoutManager(this)
+            }
         })
     }
 
