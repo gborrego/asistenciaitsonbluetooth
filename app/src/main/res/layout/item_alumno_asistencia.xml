@@ -8,7 +8,7 @@
 
     <!-- Student ID -->
     <TextView
-        android:id="@+id/textViewNombre"
+        android:id="@+id/textView_id"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
 
     <!-- Student name -->
     <TextView
-        android:id="@+id/textViewNombre"
+        android:id="@+id/textView_nombre"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -28,14 +28,14 @@
 
     <!-- CheckBox attendance -->
     <CheckBox
-        android:id="@+id/checkBoxAsistencia"
+        android:id="@+id/checkBox_asistencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="" />
 
     <!-- CheckBox late -->
     <CheckBox
-        android:id="@+id/checkBoxRetardo"
+        android:id="@+id/checkBox_falta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="" />

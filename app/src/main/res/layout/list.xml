@@ -106,18 +106,6 @@
             android:textColor="#FFFFFF"
             android:gravity="center" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#0E5688"
-            android:paddingTop="15dp"
-            android:padding="8dp"
-            android:text="Faltas"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF"
-            android:gravity="center" />
-
     </LinearLayout>
 
 

@@ -45,7 +45,6 @@
         android:paddingTop="30dp">
 
         <TextView
-            android:id="@+id/label_reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Razón de la justificación"
@@ -56,7 +55,7 @@
             android:layout_marginLeft="5dp" />
 
         <EditText
-            android:id="@+id/et_reason"
+            android:id="@+id/editText_razon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Escribe la razón"
@@ -64,7 +63,7 @@
             android:layout_marginTop="10dp" />
 
         <ImageView
-            android:id="@+id/iv_photo"
+            android:id="@+id/imageView_foto"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:contentDescription="Fotografía de justificación"
@@ -72,7 +71,7 @@
             android:layout_marginTop="20dp" />
 
         <ImageButton
-            android:id="@+id/btn_take_photo"
+            android:id="@+id/boton_tomarFoto"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
@@ -82,7 +81,7 @@
             android:scaleType="centerCrop" />
 
         <Button
-            android:id="@+id/btn_save"
+            android:id="@+id/boton_guardar"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Guardar"
