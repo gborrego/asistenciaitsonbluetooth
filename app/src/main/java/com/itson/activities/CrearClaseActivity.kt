@@ -10,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.itson.R
+import com.itson.models.Alumno
+import com.itson.models.Clase
 import com.itson.viewmodels.CrearClaseViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,8 +50,10 @@ class CrearClaseActivity : AppCompatActivity() {
         createButton.setOnClickListener {
             val alias = editTextAlias.text.toString()
             viewModel.setAlias(alias)
-            viewModel.createClase();
-            navigateToMainActivity();
+            val createdClaseAlumnos = viewModel.createClase()?.alumnos
+            if(createdClaseAlumnos != null) {
+                navigateToClaseAlumnosDispositivosActivity(createdClaseAlumnos)
+            }
         }
 
         viewModel.nombre.observe(this, Observer { nombre ->
@@ -82,8 +86,9 @@ class CrearClaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToMainActivity() {
+    private fun navigateToClaseAlumnosDispositivosActivity(alumnos: List<Alumno>) {
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("ALUMNOS", alumnos.toTypedArray());
         startActivity(intent)
     }
 

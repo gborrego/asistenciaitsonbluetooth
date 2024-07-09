@@ -80,12 +80,13 @@ class CrearClaseViewmodel @Inject constructor(
             }
         }
     }
-    fun createClase(): Boolean {
+    fun createClase(): Clase? {
         val nombre = _nombre.value
         val alias = _alias.value
         val ciclo = _ciclo.value
         val instructor = _instructor.value
         val alumnos = _alumnos.value
+
 
         if (nombre != null && alias != null && ciclo != null && instructor != null && alumnos != null) {
             val clase = Clase(
@@ -96,14 +97,14 @@ class CrearClaseViewmodel @Inject constructor(
                 instructor = instructor,
             )
             clasesRepository.insert(clase)
-            val savedClase = clasesRepository.getLast() ?: return false;
+            val savedClase = clasesRepository.getLast() ?: return null;
             for (alumno in alumnos){
                 alumnosRepository.getById(alumno.matricula) ?: alumnosRepository.insert(alumno);
                 alumnosRepository.setToClase(alumno,savedClase);
             }
-            return true;
+            return savedClase;
         } else {
-            return false;
+            return null
         }
     }
 }

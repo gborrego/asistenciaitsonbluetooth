@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itson.R
 import com.itson.models.Clase
 
-class ClaseAdapter(private val clases: List<Clase>) :
-    RecyclerView.Adapter<ClaseAdapter.ClaseViewHolder>() {
+class ClaseAdapter(
+    private val clases: List<Clase>,
+    private val onItemClick: (Clase) -> Unit
+) : RecyclerView.Adapter<ClaseAdapter.ClaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClaseViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -18,7 +20,7 @@ class ClaseAdapter(private val clases: List<Clase>) :
     }
 
     override fun onBindViewHolder(holder: ClaseViewHolder, position: Int) {
-        holder.bind(clases[position])
+        holder.bind(clases[position], onItemClick)
     }
 
     override fun getItemCount(): Int = clases.size
@@ -27,8 +29,9 @@ class ClaseAdapter(private val clases: List<Clase>) :
         private val textViewNombreClase: TextView = itemView.findViewById(R.id.textViewNombreClase)
         private val textViewSimbolo: TextView = itemView.findViewById(R.id.textViewSimbolo)
 
-        fun bind(clase: Clase) {
-            textViewNombreClase.text = clase.alias
+        fun bind(clase: Clase, onItemClick: (Clase) -> Unit) {
+            textViewNombreClase.text = clase.nombre
+            itemView.setOnClickListener { onItemClick(clase) }
         }
     }
 }

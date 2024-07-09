@@ -37,7 +37,11 @@ class MainActivity : ComponentActivity() {
 
         viewModel.clases.observe(this, Observer {
             if (it != null) {
-                claseRecyclerView.adapter = ClaseAdapter(it)
+                claseRecyclerView.adapter = ClaseAdapter(it) { clase ->
+                    if (clase.id != null) {
+                        navigateToClaseActivity(clase.id)
+                    }
+                }
                 claseRecyclerView.layoutManager = LinearLayoutManager(this)
             }
         })
@@ -48,4 +52,9 @@ class MainActivity : ComponentActivity() {
         startActivity(intent)
     }
 
+    private fun navigateToClaseActivity(claseId: Long) {
+        val intent = Intent(this, ClaseActivity::class.java)
+        intent.putExtra("CLASE_ID", claseId)
+        startActivity(intent)
+    }
 }
