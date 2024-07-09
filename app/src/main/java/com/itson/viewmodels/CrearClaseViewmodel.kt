@@ -98,9 +98,9 @@ class CrearClaseViewmodel @Inject constructor(
             )
             clasesRepository.insert(clase)
             val savedClase = clasesRepository.getLast() ?: return null;
-            for (alumno in alumnos){
+            for (alumno in alumnos) {
                 alumnosRepository.getById(alumno.matricula) ?: alumnosRepository.insert(alumno);
-                alumnosRepository.setToClase(alumno,savedClase);
+                alumnosRepository.setToClase(alumno, savedClase);
             }
             return savedClase;
         } else {

@@ -1,12 +1,20 @@
 package com.itson.activities
 
 import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -24,6 +32,8 @@ class ClaseAlumnosDispositivosActivity : AppCompatActivity(){
 
     private val viewModel: ClaseAlumnosDispositivosViewmodel by viewModels()
     private val REQUEST_BLUETOOTH_PERMISSIONS = 1
+    private lateinit var receiver: BroadcastReceiver
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +46,12 @@ class ClaseAlumnosDispositivosActivity : AppCompatActivity(){
 
         val alumnos = intent.getParcelableArrayListExtra<Alumno>("ALUMNOS")
 
-        if (alumnos != null){
-            viewModel.setAlumnos(alumnos)
-        }
+        setupObservers()
 
-        if (checkBluetoothPermissions()) {
-            setupObservers()
-        } else {
-            requestBluetoothPermissions()
+        if (alumnos == null) {
+            Toast.makeText(this, "No se recibieron los alumnos", Toast.LENGTH_SHORT).show()
+        }else{
+            viewModel.setAlumnos(alumnos)
         }
 
         pairButton.setOnClickListener {
@@ -61,57 +69,75 @@ class ClaseAlumnosDispositivosActivity : AppCompatActivity(){
         manualButton.setOnClickListener {
 
         }
+
+        checkAndRequestPermissions()
     }
 
-    private fun checkBluetoothPermissions(): Boolean {
+    private fun setupObservers() {
+        viewModel.permissionsRequired.observe(this, Observer { required ->
+            if (required) {
+                requestBluetoothPermissions()
+            } else {
+                viewModel.startDiscovery()
+            }
+        })
+
+        viewModel.dispositivos.observe(this, Observer { dispositivos ->
+            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, dispositivos.map { it.nombre })
+            findViewById<ListView>(R.id.bluetooth_device_list_view).adapter = adapter
+        })
+
+        viewModel.alumnos.observe(this, Observer { alumnos ->
+            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, alumnos.map { it.nombre })
+            findViewById<ListView>(R.id.student_list_view).adapter = adapter
+        })
+    }
+
+    private fun checkAndRequestPermissions() {
+        if (!hasBluetoothPermissions()) {
+            requestBluetoothPermissions()
+        } else {
+            viewModel.startDiscovery()
+        }
+    }
+
+    private fun hasBluetoothPermissions(): Boolean {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED)
     }
 
     private fun requestBluetoothPermissions() {
+        val permissions = mutableListOf(
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.ACCESS_FINE_LOCATION // Needed for device discovery
+        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ActivityCompat.requestPermissions(this, arrayOf(
-                Manifest.permission.BLUETOOTH,
-                Manifest.permission.BLUETOOTH_ADMIN,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ), REQUEST_BLUETOOTH_PERMISSIONS)
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(
-                Manifest.permission.BLUETOOTH,
-                Manifest.permission.BLUETOOTH_ADMIN
-            ), REQUEST_BLUETOOTH_PERMISSIONS)
+            permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
         }
+        ActivityCompat.requestPermissions(this, permissions.toTypedArray(), REQUEST_BLUETOOTH_PERMISSIONS)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_BLUETOOTH_PERMISSIONS) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                setupObservers()
-                val alumnos = intent.getParcelableArrayListExtra<Alumno>("ALUMNOS")
-                if (alumnos != null){
-                    viewModel.setAlumnos(alumnos)
-                }
+                viewModel.startDiscovery()
             } else {
-
+                Toast.makeText(this, "Se requieren permisos de Bluetooth para escanear dispositivos.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun setupObservers() {
-        viewModel.dispositivos.observe(this, Observer { dispositivos ->
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, dispositivos.map { it.nombre })
-            findViewById<ListView>(R.id.bluetooth_device_list_view).adapter = adapter
-        })
-
-        viewModel.dispositivos.observe(this, Observer { alumnos ->
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, alumnos.map { it.nombre })
-            findViewById<ListView>(R.id.student_list_view).adapter = adapter
-        })
-    }
-
     //Juntar alumno con dispositivo
     private fun pairDispositivoToAlumno(device: Dispositivo?, alumno: Alumno?) {
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopDiscovery()
+        unregisterReceiver(receiver)
     }
 }

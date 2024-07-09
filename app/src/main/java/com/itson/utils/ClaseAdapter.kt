@@ -30,7 +30,7 @@ class ClaseAdapter(
         private val textViewSimbolo: TextView = itemView.findViewById(R.id.textViewSimbolo)
 
         fun bind(clase: Clase, onItemClick: (Clase) -> Unit) {
-            textViewNombreClase.text = clase.nombre
+            textViewNombreClase.text = clase.alias
             itemView.setOnClickListener { onItemClick(clase) }
         }
     }

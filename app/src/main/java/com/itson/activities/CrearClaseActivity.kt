@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -50,9 +51,11 @@ class CrearClaseActivity : AppCompatActivity() {
         createButton.setOnClickListener {
             val alias = editTextAlias.text.toString()
             viewModel.setAlias(alias)
-            val createdClaseAlumnos = viewModel.createClase()?.alumnos
-            if(createdClaseAlumnos != null) {
-                navigateToClaseAlumnosDispositivosActivity(createdClaseAlumnos)
+            val createdClase = viewModel.createClase()
+            if( createdClase == null){
+                Toast.makeText(this, "No se pudo crear la clase", Toast.LENGTH_SHORT).show()
+            } else{
+                navigateToClaseAlumnosDispositivosActivity()
             }
         }
 
@@ -86,9 +89,10 @@ class CrearClaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToClaseAlumnosDispositivosActivity(alumnos: List<Alumno>) {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("ALUMNOS", alumnos.toTypedArray());
+    private fun navigateToClaseAlumnosDispositivosActivity() {
+        val intent = Intent(this, ClaseAlumnosDispositivosActivity::class.java)
+        val alumnos = viewModel.alumnos.value?.let { ArrayList(it) }
+        intent.putParcelableArrayListExtra("ALUMNOS", alumnos);
         startActivity(intent)
     }
 
