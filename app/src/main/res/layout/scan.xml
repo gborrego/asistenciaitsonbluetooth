@@ -45,16 +45,16 @@
         android:orientation="vertical"
         android:paddingTop="100dp"
         >
-        <!-- Animation View -->
-        <com.airbnb.lottie.LottieAnimationView
+        <!-- Animation View dsds -->
+        <!--  <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            app:lottie_rawRes="@raw/your_animation_file"
+            app:lottie_rawRes="@raw/scanAnimation"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"/>
+            app:lottie_loop="true"/> -->
 
         <Button
             android:id="@+id/scan_boton"
