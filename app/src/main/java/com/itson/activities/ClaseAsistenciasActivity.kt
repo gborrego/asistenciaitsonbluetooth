@@ -1,9 +1,9 @@
 package com.itson.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.itson.R
 import com.itson.utils.AsistenciaAdapter
+import com.itson.viewmodels.ClaseAsistenciasViewModel
 import com.itson.viewmodels.ClaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ClaseActivity : AppCompatActivity() {
+class ClaseAsistenciasActivity : AppCompatActivity() {
 
-    private val viewModel: ClaseViewModel by viewModels()
+    private val viewModel: ClaseAsistenciasViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,6 @@ class ClaseActivity : AppCompatActivity() {
         val attendanceButton: Button = findViewById(R.id.attendance_boton)
 
         viewModel.clase.observe(this, Observer { clase ->
-              Log.i("Clase", clase.toString())
         //    claseNameTextView.text = clase.nombre
         })
 
@@ -50,9 +50,16 @@ class ClaseActivity : AppCompatActivity() {
         }
 
         studentsButton.setOnClickListener {
+            navigateToClaseAlumnosActivity(claseId)
         }
 
         attendanceButton.setOnClickListener {
         }
+    }
+
+    private fun navigateToClaseAlumnosActivity(claseId: Long) {
+        val intent = Intent(this, ClaseAlumnosActivity::class.java)
+        intent.putExtra("CLASE_ID", claseId)
+        startActivity(intent)
     }
 }

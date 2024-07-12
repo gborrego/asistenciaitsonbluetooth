@@ -91,7 +91,7 @@ class CrearClaseActivity : AppCompatActivity() {
 
     private fun navigateToClaseAlumnosDispositivosActivity() {
         val intent = Intent(this, ClaseAlumnosDispositivosActivity::class.java)
-        val alumnos = viewModel.alumnos.value?.let { ArrayList(it) }
+        val alumnos = viewModel.alumnos.value?.filter { it.dispositivo == null }?.let { ArrayList(it) }
         intent.putParcelableArrayListExtra("ALUMNOS", alumnos);
         startActivity(intent)
     }

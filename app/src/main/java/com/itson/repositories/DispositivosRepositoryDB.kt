@@ -34,6 +34,16 @@ class DispositivosRepositoryDB (databaseProvider: DatabaseProvider, application:
         }
     }
 
+    override fun getByDireccion(direccion: String): Dispositivo? {
+        try {
+            return dispositivoEntityQueries.selectDispositivoByDireccion(direccion).executeAsOneOrNull()
+                ?.asModel()
+        } catch (e: Exception){
+            e.message?.let { Log.e("DB Error", it) }
+            throw Exception("Error! No se pudo obtener el dispo")
+        }
+    }
+
     override fun getById(id: Long): Dispositivo {
         TODO("Not yet implemented")
     }
