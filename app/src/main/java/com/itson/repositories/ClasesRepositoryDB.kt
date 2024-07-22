@@ -4,15 +4,21 @@ import android.app.Application
 import android.util.Log
 import com.itson.AlumnoClaseQueries
 import com.itson.ClaseEntityQueries
+import com.itson.DispositivoEntityQueries
 import com.itson.database.Database
 import com.itson.database.DatabaseProvider
+import com.itson.models.Alumno
 import com.itson.models.Clase
 import com.itson.utils.asModel
 
 class ClasesRepositoryDB (databaseProvider : DatabaseProvider, application: Application): ClasesRepository {
     private val database: Database = databaseProvider.provideDatabase(application.applicationContext)
+    //TODOS ESTAS LAS CLASES QUE TERMINAN EN EntityQueries SON AUTOGENERADAS (NO MODIFICAR)
+    //Para modificar eso hay que ir a la carpeta sqldeligt/com/itson y modificar los archivos .sq
+    //De necesitar mas informacion, esta se puede encontrar en la documentacion de sqldelight
     private val claseEntityQueries: ClaseEntityQueries = database.claseEntityQueries
     private val alumnoClaseQueries: AlumnoClaseQueries = database.alumnoClaseQueries
+    private val dispositivoEntityQueries: DispositivoEntityQueries = database.dispositivoEntityQueries
 
 
     override fun insert(model: Clase) {
@@ -27,11 +33,12 @@ class ClasesRepositoryDB (databaseProvider : DatabaseProvider, application: Appl
 
     override fun getById(id: Long): Clase? {
         return try {
-            claseEntityQueries.selectClaseById(id).executeAsOneOrNull()?.let{
-                val alumnos = alumnoClaseQueries.selectAlumnosForClase(it.id).executeAsList().map { it2 ->
-                    it2.asModel(null)
+            claseEntityQueries.selectClaseById(id).executeAsOneOrNull()?.let{ clase ->
+                val alumnos = alumnoClaseQueries.selectAlumnosForClase(clase.id).executeAsList().map { alumno ->
+                    val dispositivo = alumno.id_dispositivo?.let { id -> dispositivoEntityQueries.selectDispositivoById(id).executeAsOneOrNull() }?.asModel()
+                    alumno.asModel(dispositivo)
                 }
-                it.asModel(alumnos)
+                clase.asModel(alumnos)
             }
         } catch (e: Exception) {
             e.message?.let { Log.e("DB Error", it) }
@@ -45,6 +52,29 @@ class ClasesRepositoryDB (databaseProvider : DatabaseProvider, application: Appl
         } catch (e: Exception){
             e.message?.let { Log.e("DB Error", it) }
             throw Exception("Error! No se pudo obtener la lista de clases")
+        }
+    }
+
+    override fun getLast(): Clase? {
+        return try{
+            claseEntityQueries.lastInsertRowId().executeAsOneOrNull()?.let{
+                val clase = claseEntityQueries.selectClaseById(it).executeAsOneOrNull();
+                return clase?.asModel(null);
+            }
+        } catch (e: Exception){
+            e.message?.let { Log.e("DB Error", it) }
+            throw Exception("Error! No se pudo obtener la clase")
+        }
+    }
+
+    override fun claseContainsAlumno(clase: Clase, alumno: Alumno): Boolean {
+        return try{
+            val claseAlumno =
+                clase.id?.let { alumnoClaseQueries.selectAlumnoInClase(it,alumno.matricula) }?.executeAsOneOrNull()
+            claseAlumno != null
+        } catch (e: Exception){
+            e.message?.let { Log.e("DB Error", it) }
+            throw Exception("Error! No se pudo obtener la clase")
         }
     }
 

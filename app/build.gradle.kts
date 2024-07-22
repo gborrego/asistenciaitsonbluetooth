@@ -4,6 +4,7 @@ plugins {
     id("app.cash.sqldelight") version "2.0.2"
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -75,6 +76,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation ("com.opencsv:opencsv:5.5.2")
+    implementation ("org.apache.commons:commons-csv:1.8")
 }
 
 sqldelight {

@@ -17,6 +17,9 @@ import com.itson.utils.asModel
 
 class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Application): AlumnosRepository {
     private val database: Database = databaseProvider.provideDatabase(application.applicationContext)
+    //TODOS ESTAS LAS CLASES QUE TERMINAN EN EntityQueries SON AUTOGENERADAS (NO MODIFICAR)
+    //Para modificar eso hay que ir a la carpeta sqldeligt/com/itson y modificar los archivos .sq
+    //De necesitar mas informacion, esta se puede encontrar en la documentacion de sqldelight
     private val alumnoEntityQueries: AlumnoEntityQueries = database.alumnoEntityQueries
     private val dispositivoEntityQueries: DispositivoEntityQueries = database.dispositivoEntityQueries
     private val alumnoClaseQueries:  AlumnoClaseQueries = database.alumnoClaseQueries
@@ -31,14 +34,14 @@ class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Appli
         }
     }
 
-    override fun getById(id: Long): Alumno {
+    override fun getById(id: Long): Alumno? {
         try {
             val alumno = alumnoEntityQueries.selectAlumnoById(id).executeAsOneOrNull()
             if (alumno != null){
                 val dispositivo = modelarDispositvo(alumno);
-                alumno.asModel(dispositivo)
+                return alumno.asModel(dispositivo)
             }
-            throw Exception("Error! No se pudo obtener al alumno con id $id")
+            return null;
         } catch (e: Exception) {
             e.message?.let { Log.e("DB Error", it) }
             throw Exception("Error! No se pudo obtener al alumno con id $id")
@@ -98,9 +101,9 @@ class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Appli
         throw Exception ("La clase proporcionada no tiene el parametro id")
     }
 
-    private fun modelarDispositvo(alumnoEntity: AlumnoEntity): Dispositivo {
+    private fun modelarDispositvo(alumnoEntity: AlumnoEntity): Dispositivo? {
         return alumnoEntity.id_dispositivo?.let { dispositivoId ->
             dispositivoEntityQueries.selectDispositivoById(dispositivoId).executeAsOneOrNull()?.asModel()
-        }?: throw IllegalArgumentException("El dispositivo no es válido.")
+        }
     }
 }

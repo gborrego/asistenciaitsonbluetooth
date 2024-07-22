@@ -5,5 +5,7 @@ import com.itson.models.Clase
 import com.itson.models.Justificante
 
 interface JustificantesRepository: Repository<Justificante,Long> {
+
+    fun getLast(): Justificante?
     fun insertToAsistencia(asistencia: Asistencia, justificante: Justificante)
 }

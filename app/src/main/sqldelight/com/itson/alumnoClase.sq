@@ -15,6 +15,11 @@ SELECT alumnoEntity.* FROM alumnoEntity
 JOIN alumnoClase ON alumnoEntity.matricula = alumnoClase.alumno_matricula
 WHERE alumnoClase.clase_id = ?;
 
+selectAlumnoInClase:
+SELECT alumnoEntity.* FROM alumnoEntity
+JOIN alumnoClase ON alumnoEntity.matricula = alumnoClase.alumno_matricula
+WHERE alumnoClase.clase_id = ? AND alumnoClase.alumno_matricula = ?;
+
 selectClasesForAlumno:
 SELECT claseEntity.* FROM claseEntity
 JOIN alumnoClase ON claseEntity.id = alumnoClase.clase_id

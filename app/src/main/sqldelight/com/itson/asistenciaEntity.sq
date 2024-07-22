@@ -22,6 +22,11 @@ SELECT *
 FROM asistenciaEntity
 WHERE id = ?;
 
+selectAsistenciasByClase:
+SELECT *
+FROM asistenciaEntity
+WHERE id_clase= ?;
+
 selectAsistenciasByClaseAndFecha:
 SELECT *
 FROM asistenciaEntity

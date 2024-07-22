@@ -13,6 +13,9 @@ import com.itson.utils.asModel
 
 class DispositivosRepositoryDB (databaseProvider: DatabaseProvider, application: Application): DispositivosRepository{
     private val database: Database = databaseProvider.provideDatabase(application.applicationContext)
+    //TODOS ESTAS LAS CLASES QUE TERMINAN EN EntityQueries SON AUTOGENERADAS (NO MODIFICAR)
+    //Para modificar eso hay que ir a la carpeta sqldeligt/com/itson y modificar los archivos .sq
+    //De necesitar mas informacion, esta se puede encontrar en la documentacion de sqldelight
     private val dispositivoEntityQueries: DispositivoEntityQueries= database.dispositivoEntityQueries
     private val alumnoEntityQueries: AlumnoEntityQueries= database.alumnoEntityQueries
 
@@ -31,6 +34,16 @@ class DispositivosRepositoryDB (databaseProvider: DatabaseProvider, application:
         } catch (e: Exception) {
             e.message?.let { Log.e("DB Error", it) }
             throw Exception("Error! No se pudo insertar $dispositivo a $alumno")
+        }
+    }
+
+    override fun getByDireccion(direccion: String): Dispositivo? {
+        try {
+            return dispositivoEntityQueries.selectDispositivoByDireccion(direccion).executeAsOneOrNull()
+                ?.asModel()
+        } catch (e: Exception){
+            e.message?.let { Log.e("DB Error", it) }
+            throw Exception("Error! No se pudo obtener el dispo")
         }
     }
 

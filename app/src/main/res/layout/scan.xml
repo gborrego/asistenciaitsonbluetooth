@@ -45,7 +45,7 @@
         android:orientation="vertical"
         android:paddingTop="100dp"
         >
-        <!-- Animation View -->
+        <!-- Animation View dsds -->
         <!--  <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"
             android:layout_width="300dp"
