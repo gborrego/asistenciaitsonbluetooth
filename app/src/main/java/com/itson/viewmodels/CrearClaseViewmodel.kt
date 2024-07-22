@@ -23,6 +23,8 @@ class CrearClaseViewmodel @Inject constructor(
     private val application: Application
 ) : ViewModel() {
 
+    //Para utilizar los repositorios los inyectamos con la anotacion @Inject, estos se obtienen del modulo
+    //en el paquete de repositories
     @Inject
     lateinit var clasesRepository: ClasesRepository;
 
@@ -48,6 +50,7 @@ class CrearClaseViewmodel @Inject constructor(
         _alias.value = alias
     }
 
+    //Metodo que procesa el CSV
     fun parseCSV(uri: Uri){
         viewModelScope.launch {
             val alumnosList = mutableListOf<Alumno>()
@@ -80,13 +83,14 @@ class CrearClaseViewmodel @Inject constructor(
             }
         }
     }
+
+    //Metodo que crea la clase
     fun createClase(): Clase? {
         val nombre = _nombre.value
         val alias = _alias.value
         val ciclo = _ciclo.value
         val instructor = _instructor.value
         val alumnos = _alumnos.value
-
 
         if (nombre != null && alias != null && ciclo != null && instructor != null && alumnos != null) {
             val clase = Clase(
@@ -97,9 +101,12 @@ class CrearClaseViewmodel @Inject constructor(
                 instructor = instructor,
             )
             clasesRepository.insert(clase)
+            //Obtenemos la clase que acabamos de crear.
             val savedClase = clasesRepository.getLast() ?: return null;
             for (alumno in alumnos) {
+                //Se intenta obtener el alumno por id, de no existir se crea.
                 alumnosRepository.getById(alumno.matricula) ?: alumnosRepository.insert(alumno);
+                //Se asigna el alumno creado a la clase.
                 alumnosRepository.setToClase(alumno, savedClase);
             }
             return savedClase;

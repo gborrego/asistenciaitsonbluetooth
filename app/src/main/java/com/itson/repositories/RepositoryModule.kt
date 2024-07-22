@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+//Modulos para inyeccion de dependencias utilizando Dagger hilt
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {

@@ -13,6 +13,9 @@ import com.itson.utils.asModel
 
 class JustificantesRepositoryDB(databaseProvider: DatabaseProvider, application: Application): JustificantesRepository {
     private val database: Database = databaseProvider.provideDatabase(application.applicationContext)
+    //TODOS ESTAS LAS CLASES QUE TERMINAN EN EntityQueries SON AUTOGENERADAS (NO MODIFICAR)
+    //Para modificar eso hay que ir a la carpeta sqldeligt/com/itson y modificar los archivos .sq
+    //De necesitar mas informacion, esta se puede encontrar en la documentacion de sqldelight
     private val justificanteEntityQueries: JustificanteEntityQueries = database.justificanteEntityQueries
     private val asistenciaEntityQueries: AsistenciaEntityQueries = database.asistenciaEntityQueries
 

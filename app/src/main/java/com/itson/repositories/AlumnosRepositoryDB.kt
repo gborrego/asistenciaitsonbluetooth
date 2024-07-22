@@ -17,6 +17,9 @@ import com.itson.utils.asModel
 
 class AlumnosRepositoryDB(databaseProvider: DatabaseProvider, application: Application): AlumnosRepository {
     private val database: Database = databaseProvider.provideDatabase(application.applicationContext)
+    //TODOS ESTAS LAS CLASES QUE TERMINAN EN EntityQueries SON AUTOGENERADAS (NO MODIFICAR)
+    //Para modificar eso hay que ir a la carpeta sqldeligt/com/itson y modificar los archivos .sq
+    //De necesitar mas informacion, esta se puede encontrar en la documentacion de sqldelight
     private val alumnoEntityQueries: AlumnoEntityQueries = database.alumnoEntityQueries
     private val dispositivoEntityQueries: DispositivoEntityQueries = database.dispositivoEntityQueries
     private val alumnoClaseQueries:  AlumnoClaseQueries = database.alumnoClaseQueries

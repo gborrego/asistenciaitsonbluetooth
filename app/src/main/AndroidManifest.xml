@@ -21,6 +21,21 @@
         android:theme="@style/Theme.Asistencia"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ClaseAsistenciasFechaActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light">
+        </activity>
+        <activity
+            android:name=".activities.AgregarAlumnoManualActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light">
+        </activity>
+        <activity
+            android:name=".activities.ClaseAlumnosActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light">
+        </activity>
+        <activity
             android:name=".activities.ClaseAlumnosDispositivosActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light">

@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.itson.R
 import com.itson.models.Alumno
-import com.itson.viewmodels.ClaseAlumnosViewModel
+import com.itson.utils.AlumnoAdapter
+import com.itson.viewmodels.ClaseAlumnosViewmodel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ClaseAlumnosActivity : AppCompatActivity() {
 
-    private val viewModel: ClaseAlumnosViewModel by viewModels()
+    private val viewModel: ClaseAlumnosViewmodel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,39 +28,40 @@ class ClaseAlumnosActivity : AppCompatActivity() {
 
         if (claseId != -1L) {
             viewModel.fetchClase(claseId)
-            viewModel.fetchAlumnosList(claseId)
         }
 
         val nombreGrupoTextView: TextView = findViewById(R.id.nombreGrupo)
         val botonLista: Button = findViewById(R.id.botonLista)
         val botonAlumnos: Button = findViewById(R.id.botonAlumnos)
-        val addButton: Button = findViewById(R.id.add_button)
+        val botonAgregarAlumno: Button = findViewById(R.id.add_student_button)
+        val botonAgregarDispositivos: Button = findViewById(R.id.add_device_button)
         val recyclerView: RecyclerView = findViewById(R.id.lista_alumnos_recycler_view)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Adapter for RecyclerView
-        //val adapter = AlumnosAdapter()
-        //recyclerView.adapter = adapter
 
         viewModel.clase.observe(this, Observer { clase ->
             nombreGrupoTextView.text = clase.nombre
         })
 
         viewModel.alumnoList.observe(this, Observer { alumnosList ->
-            //adapter.submitList(alumnosList)
+            recyclerView.adapter = AlumnoAdapter(alumnosList)
         })
 
         botonLista.setOnClickListener {
-
+            navigateToClaseAsistenciasActivity(claseId)
         }
 
         botonAlumnos.setOnClickListener {
             // Handle button click
         }
 
-        addButton.setOnClickListener {
-            // Handle button click
+        botonAgregarAlumno.setOnClickListener {
+            navigateToAgregarAlumnoManualActiviy(claseId)
+        }
+
+        botonAgregarDispositivos.setOnClickListener {
+            navigateToClaseAlumnosDispositivosActivity(claseId)
         }
     }
 
@@ -65,5 +69,19 @@ class ClaseAlumnosActivity : AppCompatActivity() {
         val intent = Intent(this, ClaseAsistenciasActivity::class.java)
         intent.putExtra("CLASE_ID", claseId)
         startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToAgregarAlumnoManualActiviy(claseId: Long) {
+        val intent = Intent(this, AgregarAlumnoManualActivity::class.java)
+        intent.putExtra("CLASE_ID", claseId)
+        startActivity(intent)
+    }
+
+    private fun navigateToClaseAlumnosDispositivosActivity(claseId: Long) {
+        val intent = Intent(this, ClaseAlumnosDispositivosActivity::class.java)
+        intent.putExtra("CLASE_ID", claseId)
+        startActivity(intent)
+        finish()
     }
 }

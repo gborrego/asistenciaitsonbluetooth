@@ -26,8 +26,7 @@ class ClaseAdapter(
     override fun getItemCount(): Int = clases.size
 
     class ClaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val textViewNombreClase: TextView = itemView.findViewById(R.id.textViewNombreClase)
-        private val textViewSimbolo: TextView = itemView.findViewById(R.id.textViewSimbolo)
+        private val textViewNombreClase: TextView = itemView.findViewById(R.id.textView_nombreClase)
 
         fun bind(clase: Clase, onItemClick: (Clase) -> Unit) {
             textViewNombreClase.text = clase.alias

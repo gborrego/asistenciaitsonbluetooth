@@ -18,6 +18,9 @@ import com.itson.utils.asModel
 
 class AsistenciasRepositoryDB(databaseProvider: DatabaseProvider, application: Application): AsistenciasRepository {
     private val database: Database = databaseProvider.provideDatabase(application.applicationContext)
+    //TODOS ESTAS LAS CLASES QUE TERMINAN EN EntityQueries SON AUTOGENERADAS (NO MODIFICAR)
+    //Para modificar eso hay que ir a la carpeta sqldeligt/com/itson y modificar los archivos .sq
+    //De necesitar mas informacion, esta se puede encontrar en la documentacion de sqldelight
     private val alumnoEntityQueries: AlumnoEntityQueries = database.alumnoEntityQueries
     private val claseEntityQueries: ClaseEntityQueries = database.claseEntityQueries
     private val asistenciaEntityQueries: AsistenciaEntityQueries = database.asistenciaEntityQueries
@@ -49,6 +52,22 @@ class AsistenciasRepositoryDB(databaseProvider: DatabaseProvider, application: A
             e.message?.let { Log.e("DB Error", it) }
             throw Exception("Error! No se pudo obtener la asistencia con id $id")
         }
+    }
+
+    override fun getByClase(clase: Clase): List<Asistencia> {
+        if (clase.id != null) {
+            return try {
+                asistenciaEntityQueries.selectAsistenciasByClase(clase.id).executeAsList().map {
+                    val alumno = modelAlumno(it);
+                    val justificante = modelJustificante(it);
+                    it.asModel(alumno, clase, justificante)
+                }
+            } catch (e: Exception) {
+                e.message?.let { Log.e("DB Error", it) }
+                throw Exception("Error! No se pudo obtener las asistencias con clase $clase")
+            }
+        }
+        throw Exception("La clase proporcionada no tiene el parametro id");
     }
 
     override fun getByClaseAndFecha(clase: Clase, fecha: String): List<Asistencia> {

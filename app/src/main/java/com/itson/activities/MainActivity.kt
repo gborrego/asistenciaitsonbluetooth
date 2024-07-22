@@ -28,11 +28,13 @@ class MainActivity : ComponentActivity() {
             navigateToCrearClaseActivity()
         }
 
-        viewModel.clases.observe(this, Observer {
-            if (it != null) {
-                claseRecyclerView.adapter = ClaseAdapter(it) { clase ->
+        //Observamos la lista livedata de clases, si existe un cambio en esta lista se muestra la nueva lista en pantalla
+        //Cada clase de la lista tiene un OnClickListener donde al seleccionarla, nos lleva a dicha clase
+        viewModel.clases.observe(this, Observer {clasesList ->
+            if (clasesList != null) {
+                claseRecyclerView.adapter = ClaseAdapter(clasesList) { clase ->
                     if (clase.id != null) {
-                        navigateToClaseActivity(clase.id)
+                        navigateToClaseAsistenciasActivity(clase.id)
                     }
                 }
                 claseRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -40,12 +42,13 @@ class MainActivity : ComponentActivity() {
         })
     }
 
+    //Metodos con los cuales cambiamos de activity
     private fun navigateToCrearClaseActivity() {
         val intent = Intent(this, CrearClaseActivity::class.java)
         startActivity(intent)
     }
 
-    private fun navigateToClaseActivity(claseId: Long) {
+    private fun navigateToClaseAsistenciasActivity(claseId: Long) {
         val intent = Intent(this, ClaseAsistenciasActivity::class.java)
         intent.putExtra("CLASE_ID", claseId)
         startActivity(intent)

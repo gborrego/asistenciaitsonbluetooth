@@ -17,9 +17,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class ClaseAlumnosViewModel @Inject constructor(
+class ClaseAlumnosViewmodel @Inject constructor(
     private val clasesRepository: ClasesRepository,
-    private val alumnosRepository: AlumnosRepository
 ) : ViewModel() {
 
     private val _clase = MutableLiveData<Clase>()
@@ -30,21 +29,13 @@ class ClaseAlumnosViewModel @Inject constructor(
 
     fun fetchClase(claseId: Long) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            val claseData = withContext(Dispatchers.IO) {
                 clasesRepository.getById(claseId)
-            }.also {
-                _clase.postValue(it)
             }
-        }
-    }
-
-    fun fetchAlumnosList(claseId: Long) {
-        val clase = clase.value ?: return
-        viewModelScope.launch {
-            val alumnosData = withContext(Dispatchers.IO) {
-                alumnosRepository.getAllByClase(clase)
+            if (claseData != null) {
+                _clase.postValue(claseData!!)
+                _alumnoList.postValue(claseData.alumnos ?: emptyList())
             }
-            _alumnoList.postValue(alumnosData)
         }
     }
 }

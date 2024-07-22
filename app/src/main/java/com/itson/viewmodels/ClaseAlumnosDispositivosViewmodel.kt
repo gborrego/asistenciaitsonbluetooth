@@ -20,6 +20,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.itson.models.Alumno
 import com.itson.models.Dispositivo
+import com.itson.repositories.AlumnosRepository
+import com.itson.repositories.ClasesRepository
 import com.itson.repositories.DispositivosRepository
 import com.itson.repositories.DispositivosRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +38,12 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
     @Inject
     lateinit var dispositivosRepository: DispositivosRepository;
 
+    @Inject
+    lateinit var clasesRepository: ClasesRepository;
+
+    @Inject
+    lateinit var alumnosRepository: AlumnosRepository;
+
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
 
     private val _dispositivos = MutableLiveData<List<Dispositivo>>()
@@ -44,16 +52,22 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
     private val _alumnos = MutableLiveData<List<Alumno>>()
     val alumnos: LiveData<List<Alumno>> get() = _alumnos
 
+    //Booleano segun el cual el la activity solicita o no los permisos e inicia la busqueda de dispositivos
     private val _permissionsRequired = MutableLiveData<Boolean>()
     val permissionsRequired: LiveData<Boolean> get() = _permissionsRequired
 
     private val dispositivosDescubiertos = mutableListOf<Dispositivo>()
+
+    //Lista modificable con el fin de poder eliminar los alumnos al momento de vincularlos a un dispositivo.
+    //Esto se hace para eliminar al alumno del listview
     private val alumnosList = mutableListOf<Alumno>()
 
+    //Recividor de transmision
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 BluetoothDevice.ACTION_FOUND -> {
+                    //Al encontrar el dispositivo lo agregamos
                     val dispositivo: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                     dispositivo?.let {
                         Log.i("Dispositivo encontrado", dispositivo.toString())
@@ -61,7 +75,7 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
                     }
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
-                    Log.i("Discovery", "Discovery Bluetooth iniciada")
+                    Log.i("Discovery", "Discovery Bluetooth iniciada en AlumnosDispositivos")
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                     Log.i("Discovery", "Discovery Bluetooth finalizada")
@@ -71,9 +85,6 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
     }
 
     init {
-        if(bluetoothAdapter == null){
-            Log.i("Bluetooth no disponible", "El dispositivo actualmente no soporta Bluetooth.")
-        }
         if (!checkBluetoothPermissions()) {
             _permissionsRequired.postValue(true)
         } else {
@@ -81,6 +92,7 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
         }
     }
 
+    //Inicia la busqueda de dispositivos
     fun startDiscovery() {
         if (checkBluetoothPermissions()) {
             val filter = IntentFilter(BluetoothDevice.ACTION_FOUND).apply {
@@ -102,6 +114,7 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
         }
     }
 
+    //Detiene la busqueda de dispostivos
     fun stopDiscovery() {
         if (ActivityCompat.checkSelfPermission(
                 application,
@@ -133,6 +146,7 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
         return allPermissionsGranted
     }
 
+    //Agrega un dispositivo bluetooth encontrado a la lista de dispositivos para el pase de lista
     private fun addDispositivoBluetooth(dispositivoBluetooth: BluetoothDevice) {
         val nombreDispositivo = if (ActivityCompat.checkSelfPermission(application, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
             dispositivoBluetooth.name ?: "Dispositivo desconocido"
@@ -142,21 +156,29 @@ class ClaseAlumnosDispositivosViewmodel @Inject constructor(
 
         val direccion = dispositivoBluetooth.address
 
-        dispositivosRepository.getByDireccion(direccion)?: {
-            val dispositivo = Dispositivo(
-                id = null,
-                nombre = nombreDispositivo,
-                direccion = direccion
-            )
-            dispositivosDescubiertos.add(dispositivo)
-            _dispositivos.postValue(dispositivosDescubiertos)
-        }
+        val dispositivoEncontrado = dispositivosRepository.getByDireccion(direccion)
+
+        //Si existe el dispositivo no lo agregamos, ya que ya esta vinculado a otro alumno
+        if (dispositivoEncontrado != null) return
+
+        val dispositivo = Dispositivo(
+            id = null,
+            nombre = nombreDispositivo,
+            direccion = direccion
+        )
+        dispositivosDescubiertos.add(dispositivo)
+        _dispositivos.postValue(dispositivosDescubiertos)
     }
 
-    fun setAlumnos(alumnosList: List<Alumno>) {
-        this.alumnosList.clear()
-        this.alumnosList.addAll(alumnosList)
-        _alumnos.postValue(alumnosList)
+    fun fetchAlumnos(claseId: Long) {
+        viewModelScope.launch {
+            val claseData = withContext(Dispatchers.IO) {
+                clasesRepository.getById(claseId)
+            }
+            if (claseData != null) {
+                _alumnos.postValue(claseData.alumnos ?: emptyList())
+            }
+        }
     }
 
     fun removeDispositivo(dispositivo: Dispositivo?){

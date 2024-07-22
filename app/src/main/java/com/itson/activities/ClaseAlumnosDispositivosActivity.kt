@@ -41,20 +41,18 @@ class ClaseAlumnosDispositivosActivity : AppCompatActivity(){
 
         val bluetoothDispositivoListView: ListView = findViewById(R.id.bluetooth_device_list_view)
         val alumnoListView: ListView = findViewById(R.id.student_list_view)
-        val pairButton: Button = findViewById(R.id.pair_button)
-        val manualButton: Button = findViewById(R.id.manual_button)
+        val vincularButton: Button = findViewById(R.id.pair_button)
+        val regresarButton: Button = findViewById(R.id.back_button)
 
-        val alumnos = intent.getParcelableArrayListExtra<Alumno>("ALUMNOS")
+        val claseId = intent.getLongExtra("CLASE_ID", -1)
+
+        if (claseId != -1L) {
+            viewModel.fetchAlumnos(claseId)
+        }
 
         setupObservers()
 
-        if (alumnos == null) {
-            Toast.makeText(this, "No se recibieron los alumnos", Toast.LENGTH_SHORT).show()
-        }else{
-            viewModel.setAlumnos(alumnos)
-        }
-
-        pairButton.setOnClickListener {
+        vincularButton.setOnClickListener {
             val selectedDispositivoPosition = bluetoothDispositivoListView.checkedItemPosition
             val selectedAlumnoPosition = alumnoListView.checkedItemPosition
 
@@ -68,17 +66,9 @@ class ClaseAlumnosDispositivosActivity : AppCompatActivity(){
             }
         }
 
-        manualButton.setOnClickListener {
-            val selectedAlumnoPosition = alumnoListView.checkedItemPosition
-
-            if (selectedAlumnoPosition != ListView.INVALID_POSITION) {
-                val selectedAlumno = viewModel.alumnos.value?.get(selectedAlumnoPosition)
-
-                viewModel.removeAlumno(selectedAlumno);
-            }
+        regresarButton.setOnClickListener {
+            navigateToClaseAlumnosActivity(claseId)
         }
-
-        checkAndRequestPermissions()
     }
 
     private fun setupObservers() {
@@ -127,7 +117,7 @@ class ClaseAlumnosDispositivosActivity : AppCompatActivity(){
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_ADMIN,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,// Needed for device discovery
+            Manifest.permission.ACCESS_COARSE_LOCATION,
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             permissions.add(Manifest.permission.BLUETOOTH_SCAN)
@@ -152,8 +142,16 @@ class ClaseAlumnosDispositivosActivity : AppCompatActivity(){
         viewModel.stopDiscovery()
     }
 
+    private fun navigateToClaseAlumnosActivity(claseId: Long) {
+        val intent = Intent(this, ClaseAlumnosActivity::class.java)
+        intent.putExtra("CLASE_ID", claseId)
+        startActivity(intent)
+        finish()
+    }
+
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }

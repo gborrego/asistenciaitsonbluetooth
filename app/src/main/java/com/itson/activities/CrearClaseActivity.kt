@@ -55,7 +55,7 @@ class CrearClaseActivity : AppCompatActivity() {
             if( createdClase == null){
                 Toast.makeText(this, "No se pudo crear la clase", Toast.LENGTH_SHORT).show()
             } else{
-                navigateToClaseAlumnosDispositivosActivity()
+                navigateToMainActivity()
             }
         }
 
@@ -89,11 +89,10 @@ class CrearClaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToClaseAlumnosDispositivosActivity() {
-        val intent = Intent(this, ClaseAlumnosDispositivosActivity::class.java)
-        val alumnos = viewModel.alumnos.value?.filter { it.dispositivo == null }?.let { ArrayList(it) }
-        intent.putParcelableArrayListExtra("ALUMNOS", alumnos);
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
 }

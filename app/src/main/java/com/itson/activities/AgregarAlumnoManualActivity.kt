@@ -1,5 +1,6 @@
 package com.itson.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -25,6 +26,12 @@ class AgregarAlumnoManualActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_manual)
 
+        val claseId = intent.getLongExtra("CLASE_ID", -1)
+
+        if (claseId != -1L) {
+            viewModel.fetchClase(claseId)
+        }
+
         val idAlumnoEditText: EditText = findViewById(R.id.edittext_id_alumno)
         val nombreAlumnoEditText: EditText = findViewById(R.id.edittext_nombre_alumno)
         val apellidosAlumnoEditText: EditText = findViewById(R.id.edittext_apellidos_alumno)
@@ -40,12 +47,24 @@ class AgregarAlumnoManualActivity : AppCompatActivity() {
             val nombreAlumno = nombreAlumnoEditText.text.toString()
             val apellidosAlumno = apellidosAlumnoEditText.text.toString()
 
-            if (idAlumno.isEmpty() || nombreAlumno.isEmpty() || apellidosAlumno.isEmpty()) {
+            if (idAlumno.isEmpty()) {
+                Toast.makeText(this, "Por favor, complete los campos necesarios", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val idLong = idAlumno.toLong()
+
+            if (viewModel.checkIfAlumnoExists(idLong)){
+                if (viewModel.addExistingAlumno(idLong)) navigateToClaseAlumnosActivity(claseId) else Toast.makeText(this, "No se pudo agregar al alumno", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (nombreAlumno.isEmpty() || apellidosAlumno.isEmpty()){
                 Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-            else{
-                if (viewModel.createAlumno()) Toast.makeText(this, "Alumno agregado correctamente", Toast.LENGTH_SHORT).show() else Toast.makeText(this, "No se pudo crear al alumno", Toast.LENGTH_SHORT).show()
-            }
+
+            if (viewModel.addNewAlumno()) navigateToClaseAlumnosActivity(claseId) else Toast.makeText(this, "No se pudo crear al alumno", Toast.LENGTH_SHORT).show()
         }
         setupObservers(idAlumnoEditText, nombreAlumnoEditText, apellidosAlumnoEditText)
         setupEditTextListeners(idAlumnoEditText, nombreAlumnoEditText, apellidosAlumnoEditText)
@@ -101,5 +120,12 @@ class AgregarAlumnoManualActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+    }
+
+    private fun navigateToClaseAlumnosActivity(claseId: Long) {
+        val intent = Intent(this, ClaseAlumnosActivity::class.java)
+        intent.putExtra("CLASE_ID", claseId)
+        startActivity(intent)
+        finish()
     }
 }
